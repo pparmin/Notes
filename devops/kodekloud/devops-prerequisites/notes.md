@@ -73,3 +73,55 @@ using `systemctl`.
   Restart=always
   ```
 
+* * * 
+
+## Section 2: Virtualization
+
+**What is Vagrant?** 
+Vagrant is a tool that lets you automate the building, configuring and maintaining of virtualization
+software (VMs). 
+
+**Important commands:** 
+
+- _Initalize a box:_
+`vagrant init centos/7` lets you deploy a specific box (e.g. "centos/7"). A *vagrant box* is a specific
+OS image with scripts that help configuring it properly. The init command creates a *Vagrantfile*. 
+
+
+- _Start a box:_
+`vagrant up` then starts the box. It will download the image and configure the necessary settings (networking, etc.)
+
+- _SSH into the VM:_
+`vagrant ssh` vagrant will set up and use the correct port to ssh into the VM
+
+- _Stop VM:_
+`vagrant halt`
+
+**Vagrant File layout example:**
+```
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "centos/7"
+  
+  # port forwarding
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  # sync folder
+  config.vm.synced_folder "../data", "/vagrant_data"
+  
+  # automatically assign RAM
+  config.vm.provider "virtualbox" do |vb|
+    
+    vb.memory = "1024"
+
+  end
+  
+  # execute specific shell commands at startup
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y apache2
+  SHELL
+
+end
+```
+
+
