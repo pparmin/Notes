@@ -124,4 +124,15 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+* * * 
 
+## Section 3: Networking
+
+**Important commands:** 
+- `ip link` list and modify interfaces on the host
+- `ip addr` see the ips assigned to these interfaces
+- `ip addr add <ip> dev eth0` temporarily add a; for persistance longer than the current system runtime
+  you can set them in the /etc/network/interfaces file 
+- `ip route`/`route` views the routing table
+- `ip route add <network> via <gateway ip>` adds a route over a specific gateway
+- `cat /proc/sys/net/ipv4/ip_forward` checks whether ip forwarding is enabled on the system
