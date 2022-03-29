@@ -136,3 +136,13 @@ end
 - `ip route`/`route` views the routing table
 - `ip route add <network> via <gateway ip>` adds a route over a specific gateway
 - `cat /proc/sys/net/ipv4/ip_forward` checks whether ip forwarding is enabled on the system
+
+**DNS**: 
+DISCLAIMER: This is a very rough overview over DNS. There is A LOT more to say about DNS as a whole. 
+
+Every UNIX based system has an `etc/hosts` file which holds a local cache for all known hostnames/IPs. The issue here is that for larger networks (read: nowadays) managing the host name resolution via local host files got too complicated. 
+
+Therefore, a DNS server holds a record/cache for known hostnames and manages the resolving process. The information for this DNS server is stored in the `etc/resolv.conf` file. 
+
+If you have an entry for the same IP in both the local host file and the DNS server, the local host file will be prioritized by default. This can be switched by changing the configuration in the `etc/nsswitch.conf` file. 
+In reality, DNS resolving follows a multi-step process, where multiple DNS servers are chained together to request the final IP of a given hostname. 
